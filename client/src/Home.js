@@ -90,8 +90,8 @@ const Home = () => {
   return (
     <div className='home'>
       <h1 className='home__title'>Computer's Choice Awards</h1>
-      <Link to='/main'>
-        <button>LET'S GO!</button>
+      <Link className='button' to='/main'>
+        <button className='button__bt'>LET'S GO!</button>
       </Link>
       <Particles id='tsparticles' options={particleOptions} />
     </div>

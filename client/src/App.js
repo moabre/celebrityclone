@@ -197,7 +197,7 @@ class App extends Component {
               className='search'
               name='inputValue'
               type='text'
-              placeholder='Insert URL of your picture'
+              placeholder='Insert URL of picture to compare'
             ></input>
             <button className='button' type='submit'>
               Search
