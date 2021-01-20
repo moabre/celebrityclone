@@ -95,12 +95,14 @@ class App extends Component {
     imageURL: '',
     box: [],
     celebrities: [],
+    active: false,
   }
 
   onSubmit = (e) => {
     e.preventDefault()
     this.setState({
       imageURL: e.target.inputValue.value,
+      active: true,
     })
     axios
       .post(
@@ -188,7 +190,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className='App'>
+      <div className={this.state.active ? 'active' : 'App'}>
         <Particles id='tsparticles' options={particleOptions} />
         <h1 className='header'>Which Celebrity do you look like?</h1>
         <div className='forminput'>
