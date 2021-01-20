@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
-import axios from 'axios';
-import Particles from 'react-tsparticles';
-import Face from './components/Face/Face';
-import './App.scss';
+import React, { Component } from 'react'
+import axios from 'axios'
+import Particles from 'react-tsparticles'
+import Face from './components/Face/Face'
+import './App.scss'
 import Celebrities from './components/Celebrities/Celebrities'
-import oscar from './svg/oscar.png';
+import oscar from './svg/oscar.png'
 
 const particleOptions = {
   background: {
     color: {
-      value: "" ,
+      value: '',
     },
   },
   backgroundmode: {
@@ -18,15 +18,15 @@ const particleOptions = {
   },
   fpsLimit: 60,
   interactivity: {
-    detectsOn: "canvas",
+    detectsOn: 'canvas',
     events: {
       onClick: {
         enable: true,
-        mode: "push",
+        mode: 'push',
       },
       onHover: {
         enable: true,
-        mode: "repulse",
+        mode: 'repulse',
       },
       resize: true,
     },
@@ -48,10 +48,10 @@ const particleOptions = {
   },
   particles: {
     color: {
-      value: "#eadd46",
+      value: '#eadd46',
     },
     links: {
-      color: "random",
+      color: 'random',
       distance: 150,
       enable: false,
       opacity: 0.5,
@@ -61,9 +61,9 @@ const particleOptions = {
       enable: true,
     },
     move: {
-      direction: "none",
+      direction: 'none',
       enable: true,
-      outMode: "bounce",
+      outMode: 'bounce',
       random: false,
       speed: 6,
       straight: false,
@@ -79,7 +79,7 @@ const particleOptions = {
       value: 0.5,
     },
     shape: {
-      type: "star",
+      type: 'star',
     },
     size: {
       random: true,
@@ -90,134 +90,131 @@ const particleOptions = {
 }
 
 class App extends Component {
-  state =  {
+  state = {
     input: '',
     imageURL: '',
     box: [],
     celebrities: [],
   }
 
-
   onSubmit = (e) => {
-    e.preventDefault();
-    console.log(e.target.inputValue.value)
+    e.preventDefault()
     this.setState({
-      imageURL: e.target.inputValue.value
+      imageURL: e.target.inputValue.value,
     })
-    axios.post('https://api.clarifai.com/v2/models/e466caa0619f444ab97497640cefc4dc/outputs', {
-      "inputs":[
+    axios
+      .post(
+        'https://api.clarifai.com/v2/models/e466caa0619f444ab97497640cefc4dc/outputs',
         {
-          "data":
-          {
-            "image":
+          inputs: [
             {
-              "url": e.target.inputValue.value
-            }
-          }
+              data: {
+                image: {
+                  url: e.target.inputValue.value,
+                },
+              },
+            },
+          ],
+        },
+        {
+          headers: {
+            authorization: 'Bearer c8c375753bb74e938881cabbf30042f7',
+            'content-type': 'application/json',
+          },
         }
-      ]},{
-      headers: {
-        "authorization": "Bearer c8c375753bb74e938881cabbf30042f7",
-        "content-type": "application/json"
-      }
-    })
-    .then(res => {
-      console.log(res.data.outputs[0]);
-      this.setState({
-        celebrities: res.data.outputs[0].data.regions[0].data.concepts
-      }) 
-    this.faceLocation(res);
-    this.displayBox(res);
-    })
-   
+      )
+      .then((res) => {
+        this.setState({
+          celebrities: res.data.outputs[0].data.regions[0].data.concepts,
+        })
+        this.faceLocation(res)
+        this.displayBox(res)
+      })
   }
 
   faceLocation = (res) => {
     try {
-      if (!res.data.outputs[0].data.regions[0])
-      return Promise.reject();
-    } catch (e){
-      return Promise.reject();
+      if (!res.data.outputs[0].data.regions[0]) return Promise.reject()
+    } catch (e) {
+      return Promise.reject()
     }
-    const image = document.getElementById('inputImage');
-    const w = Number(image.width);
-    const h = Number(image.height);
+    const image = document.getElementById('inputImage')
+    const w = Number(image.width)
+    const h = Number(image.height)
 
-    const boxes = [];
-    const region = res.data.outputs[0].data.regions; 
-    console.log(region);
+    const boxes = []
+    const region = res.data.outputs[0].data.regions
     for (let i = 0; i < region.length; i++) {
-      boxes.push(
-        this.regionInfoBox(region[i].region_info, h, w)
-      );
+      boxes.push(this.regionInfoBox(region[i].region_info, h, w))
     }
 
-    const celebList = [];
-    const celebsMatched = region[0].data.concepts;
+    const celebList = []
+    const celebsMatched = region[0].data.concepts
     for (let i = 0; i < Math.min(celebsMatched.length, 3); i++) {
-      celebList.push(
-        this.celebInfoToCelebObj(celebsMatched[i])
-      );
+      celebList.push(this.celebInfoToCelebObj(celebsMatched[i]))
     }
 
     return Promise.resolve(
       this.setState({
         box: boxes,
-        celebrities: celebList
+        celebrities: celebList,
       })
     )
   }
 
-  celebInfoToCelebObj = ({name, value}) => ({
+  celebInfoToCelebObj = ({ name, value }) => ({
     name: name,
-    prob: value
-    });
-  
+    prob: value,
+  })
+
   regionInfoBox = (regionInfo, h, w) => {
-    const face = regionInfo.bounding_box; 
-    console.log(face);
-    const {bottom_row, left_col, right_col, top_row} = face;
+    const face = regionInfo.bounding_box
+    console.log(face)
+    const { bottom_row, left_col, right_col, top_row } = face
 
     return {
       top: top_row * h,
       left: left_col * w,
-      bot: (1-bottom_row) * h,
-      right: (1-right_col) * w
-    };
-
+      bot: (1 - bottom_row) * h,
+      right: (1 - right_col) * w,
+    }
   }
-
 
   displayBox = (data) => {
-    console.log(data);
-    this.setState({ boxes: data.boxes });
+    this.setState({ boxes: data.boxes })
 
-    return data;
+    return data
   }
-    
- 
-render () {
-  console.log(this.state.box);
-  console.log(this.state.celebrities);
-  return (
-    <div className="App">
-      <Particles
-        id="tsparticles"
-        options={particleOptions}
-      />
-      <h1 className="header">Which Star are you?</h1>
-      <div className = 'forminput'>
-        <form onSubmit={this.onSubmit} className="form-out">
-        <input className="search" name="inputValue" type="text" placeholder="Find your Celebrity Twin"></input>
-        <button className="button" type="submit">Search</button>
-      </form>
-      <Celebrities celebs ={this.state.celebrities}/>
-  {(this.state.imageURL) ? <Face boxes={this.state.box} image={this.state.imageURL}/> : (<div><img className="svg" src={oscar}/></div>)}
+
+  render() {
+    return (
+      <div className='App'>
+        <Particles id='tsparticles' options={particleOptions} />
+        <h1 className='header'>Which Celebrity do you look like?</h1>
+        <div className='forminput'>
+          <form onSubmit={this.onSubmit} className='form-out'>
+            <input
+              className='search'
+              name='inputValue'
+              type='text'
+              placeholder='Insert URL of your picture'
+            ></input>
+            <button className='button' type='submit'>
+              Search
+            </button>
+          </form>
+          <Celebrities celebs={this.state.celebrities} />
+          {this.state.imageURL ? (
+            <Face boxes={this.state.box} image={this.state.imageURL} />
+          ) : (
+            <div>
+              <img className='svg' alt='oscar award' src={oscar} />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
-}
-  
+    )
+  }
 }
 
-export default App;
+export default App

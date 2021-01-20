@@ -2,15 +2,16 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: "Avenir"
+  font-family: 'Avenir';
 }
 .App {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 #tsparticles {
   z-index: -1;
   position: fixed;
@@ -21,8 +22,10 @@
   width: 100%;
   height: 100vh;
 
-  background: linear-gradient( rgba(0,0,0, 1) 10%,
-  rgba(234,44,11, 0.75) 150%);
+  background: linear-gradient(
+    rgba(0, 0, 0, 1) 10%,
+    rgba(234, 44, 11, 0.75) 150%
+  );
 }
 
 .forminput {
@@ -30,94 +33,108 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin: 5rem 0 0 0;
-  
+  padding: 5rem 0 0 0;
 }
 .center {
   display: flex;
   justify-content: center;
 }
 
-.search{
-  flex-grow: 2;
+.search {
+  min-width: 100px;
+  width: 75%;
   padding: 1.5rem;
   border-radius: 50px;
-  border-radius: 50px;
-  margin-bottom: 3rem;
-  background-color: #C7C5C4;
+  background-color: #c7c5c4;
   border: none;
   transition: all 0.5s ease-in-out;
   font-weight: 600;
+  margin: 5px;
 
-  &:focus{
+  &:focus {
     transition: all 0.5s ease-in-out;
-    background-color: #3c3030; 
+    background-color: #3c3030;
     outline: none;
   }
 }
 
-.button{
+.button {
   padding: 1.5rem 1.5rem;
   align-self: center;
-  position: relative;
-  left: 1rem;
-  bottom: 1.5rem;
-  background-color: rgb(223,202,78);
+  background-color: rgb(223, 202, 78);
   border: none;
   border-radius: 50px;
   transition: all 0.5s ease-in-out;
   font-weight: 600;
-  &:focus{
+  margin: 5px;
+  &:focus {
     outline: none;
   }
-  &:hover{
+  &:hover {
     transform: scale(200% 200%);
     cursor: pointer;
     transition: all 0.5s ease-in-out;
   }
 }
 
-.form-out{
+.form-out {
   display: flex;
   justify-content: space-between;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 3rem;
 }
 
-#inputImage{
+#inputImage {
   border-radius: 1rem;
-  border: 1rem solid 	#110e0e;
+  border: 1rem solid #110e0e;
 }
 
-.celebrity-name{
+.celebrity-name {
   color: #dfca4e;
   padding: 1rem;
   border: 0.5rem solid #dfca4e;
   border-radius: 1rem;
-  margin-right: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 8rem;
+  height: auto;
+  min-width: 98px;
+  margin: 5px;
 }
 
-.header{
+.header {
   font-size: 3rem;
   text-shadow: 15px 15px rgb(2, 2, 2);
-  position: relative;
-  top: 2.5rem;
-  color: rgb(223,202,78);
+  padding-top: 3rem;
+  text-align: center;
+  color: rgb(223, 202, 78);
 }
 
-.black{
+.black {
   color: #dfca4e;
   text-decoration: none;
 
-  &:visited{
+  &:visited {
     color: #dfca4e;
   }
 }
 
-.svg{
-  height: 500px;
+.svg {
+  max-height: 500px;
+  min-height: 200px;
+  width: 100%;
+}
+.celeb {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  max-width: 500px;
+  width: 100vw;
+}
+
+#inputImage {
+  width: 100vw;
+  max-width: 500px;
 }

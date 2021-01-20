@@ -1,16 +1,17 @@
-import React from 'react';
-import CelebrityDiv from './CelebritySearch';
-import '../../App.scss';
+import React from 'react'
+import CelebrityDiv from './CelebritySearch'
+import '../../App.scss'
 
-const Celebrities = ({celebs}) => {
-  if (celebs === undefined || celebs.length === 0)
-    return <div/>;
+const Celebrities = ({ celebs }) => {
+  if (celebs === undefined || celebs.length === 0) return <div />
 
   return (
-    <div  style={{display: 'flex', justifyContent: 'center'}}>
-      { celebs.map((celeb, i) => <CelebrityDiv key={i} celeb={celeb}/>) }
+    <div className='celeb'>
+      {celebs.map((celeb, i) => (
+        <CelebrityDiv key={i} celeb={celeb} />
+      ))}
     </div>
-  );
-};
+  )
+}
 
-export default Celebrities;
+export default Celebrities

@@ -1,12 +1,12 @@
-import React from 'react';
-import Particles from 'react-tsparticles';
-import './Home.scss';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import Particles from 'react-tsparticles'
+import './Home.scss'
+import { Link } from 'react-router-dom'
 
 const particleOptions = {
   background: {
     color: {
-      value: "" ,
+      value: '',
     },
   },
   backgroundmode: {
@@ -15,15 +15,15 @@ const particleOptions = {
   },
   fpsLimit: 60,
   interactivity: {
-    detectsOn: "canvas",
+    detectsOn: 'canvas',
     events: {
       onClick: {
         enable: true,
-        mode: "push",
+        mode: 'push',
       },
       onHover: {
         enable: true,
-        mode: "repulse",
+        mode: 'repulse',
       },
       resize: true,
     },
@@ -45,10 +45,10 @@ const particleOptions = {
   },
   particles: {
     color: {
-      value: "#eadd46",
+      value: '#eadd46',
     },
     links: {
-      color: "random",
+      color: 'random',
       distance: 150,
       enable: false,
       opacity: 0.5,
@@ -58,9 +58,9 @@ const particleOptions = {
       enable: true,
     },
     move: {
-      direction: "none",
+      direction: 'none',
       enable: true,
-      outMode: "bounce",
+      outMode: 'bounce',
       random: false,
       speed: 6,
       straight: false,
@@ -76,7 +76,7 @@ const particleOptions = {
       value: 0.5,
     },
     shape: {
-      type: "star",
+      type: 'star',
     },
     size: {
       random: true,
@@ -86,16 +86,16 @@ const particleOptions = {
   detectRetina: true,
 }
 
-
 const Home = () => {
-    return (
-        <div className="home">
-            
-            <h1 className="home-title">Computer's Choice Awards</h1>
-            <Link to="/main"><button>LET'S GO</button></Link>
-            <Particles id="tsparticles" options={particleOptions}/>
-        </div>
-    )
+  return (
+    <div className='home'>
+      <h1 className='home__title'>Computer's Choice Awards</h1>
+      <Link to='/main'>
+        <button>LET'S GO!</button>
+      </Link>
+      <Particles id='tsparticles' options={particleOptions} />
+    </div>
+  )
 }
 
 export default Home
